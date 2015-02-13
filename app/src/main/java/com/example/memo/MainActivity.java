@@ -67,32 +67,26 @@ public class MainActivity extends ActionBarActivity {
      */
     public void setOnClick() {
         // メモるボタンにクリックイベントを設定
-//        mButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mEditText.getText().toString().equals("")) {
-//                    // 空ならトーストでエラーメッセージ
-//                    Toast.makeText(mContext, getString(R.string.err_msg1), Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//                    // アダプターの先頭に入力フォームの内容を追加
-//                    mAdapter.insert(mEditText.getText().toString(), 0);
-//
-//                    // 入力フォームをクリア
-//                    mEditText.setText("");
-//
-//                    // リストの内容をアプリに保存
-//                    saveList();
-//
-//                    // トーストで完了メッセージを表示
-//                    Toast.makeText(mContext, getString(R.string.add_memo), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mEditText.getText().toString().equals("")) {
+                    // 空ならトーストでエラーメッセージ
+                    Toast.makeText(mContext, getString(R.string.err_msg1), Toast.LENGTH_SHORT).show();
 
+                } else {
+                    // アダプターの先頭に入力フォームの内容を追加
+                    mAdapter.insert(mEditText.getText().toString(), 0);
+
+                    // 入力フォームをクリア
+                    mEditText.setText("");
+
+                    // リストの内容をアプリに保存
+                    saveList();
+
+                    // トーストで完了メッセージを表示
+                    Toast.makeText(mContext, getString(R.string.add_memo), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
