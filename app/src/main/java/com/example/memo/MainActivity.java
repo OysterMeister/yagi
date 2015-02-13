@@ -19,6 +19,9 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+/**
+ * メモ帳
+ */
 public class MainActivity extends ActionBarActivity {
 
     /* メンバ変数 */
