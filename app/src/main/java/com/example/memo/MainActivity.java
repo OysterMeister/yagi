@@ -9,6 +9,8 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,9 +21,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-/**
- * メモ帳
- */
 public class MainActivity extends ActionBarActivity {
 
     /* メンバ変数 */
@@ -39,6 +38,9 @@ public class MainActivity extends ActionBarActivity {
 
         // 初期化
         initialization();
+
+        // キーボード非表示
+        HideKeyboard();
 
         // ListViewとAdapterを結びつける
         mListView.setAdapter(mAdapter);
@@ -90,6 +92,8 @@ public class MainActivity extends ActionBarActivity {
                     // トーストで完了メッセージを表示
                     Toast.makeText(mContext, getString(R.string.add_memo), Toast.LENGTH_SHORT).show();
                 }
+                // キーボード非表示
+                HideKeyboard();
             }
         });
     }
@@ -203,6 +207,19 @@ public class MainActivity extends ActionBarActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * キーボード非表示
+     */
+    public void HideKeyboard() {
+        // アプリ起動時にEditTextへのフォーカスによるキーボード非表示
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        // EditTextへのフォーカス移動時にキーボード非表示
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 }
