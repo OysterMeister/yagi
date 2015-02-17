@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        flavor1 {
+            applicationId = "jp.co.oyster.yagi"
+        }
+    }
 }
 
 dependencies {
