@@ -2,9 +2,12 @@ package com.example.memo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +34,11 @@ public class MainActivity extends ActionBarActivity {
     private ArrayAdapter mAdapter;      // アダプター
     private SharedPreferences mShared;  // シェアード
 
+    private DrawerLayout mDrawerLayout;             // ドロワーレイアウト
+    private ActionBarDrawerToggle mDrawerToggle;    // ドロワートグル
+    private ListView mSideMenuLv;                   // サイドメニューリストビュー
+    private ArrayAdapter mSideMenuAdapter;          // サイドメニューアダプター
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +46,10 @@ public class MainActivity extends ActionBarActivity {
 
         // 初期化
         initialization();
+        initDrawer();
 
         // キーボード非表示
         HideKeyboard();
-
-        // ListViewとAdapterを結びつける
-        mListView.setAdapter(mAdapter);
 
         // コンテキストメニューを表示するリストビューを登録
         registerForContextMenu(mListView);
@@ -65,6 +71,30 @@ public class MainActivity extends ActionBarActivity {
         mListView = (ListView) findViewById(R.id.listView);                         // リストビュー
         mAdapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1); // アダプター
         mShared = PreferenceManager.getDefaultSharedPreferences(mContext);          // シェアード
+        // ListViewとAdapterを結びつける
+        mListView.setAdapter(mAdapter);
+    }
+
+    /**
+     * ドロワー初期化
+     */
+    private void initDrawer() {
+        // ドロワーレイアウト
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // 切り替えボタン（3本線）の生成
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // サイドメニューの設定
+        mSideMenuLv = (ListView) findViewById(R.id.side_menu_lv);
+        mSideMenuAdapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1);
+        // ListViewとAdapterを結びつける
+        mSideMenuLv.setAdapter(mSideMenuAdapter);
+        mSideMenuAdapter.add("test1");
+        mSideMenuAdapter.add("test2");
+        mSideMenuAdapter.add("test3");
     }
 
     /**
@@ -172,7 +202,7 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -221,5 +251,15 @@ public class MainActivity extends ActionBarActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    /**
+     * Activityの開始が完了したとき
+     */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // DrawerToggleの同期
+        mDrawerToggle.syncState();
     }
 }
