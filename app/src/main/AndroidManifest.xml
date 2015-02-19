@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DailyPadCalenderActivity"
+            android:label="@string/title_activity_daily_pad_calender" >
+        </activity>
     </application>
 
 </manifest>
