@@ -1,6 +1,7 @@
 package com.example.memo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
@@ -95,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
         mSideMenuAdapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1);
         // ListViewとAdapterを結びつける
         mSideMenuLv.setAdapter(mSideMenuAdapter);
-        mSideMenuAdapter.add("test1");
+        mSideMenuAdapter.add(this.getString(R.string.title_activity_daily_pad_calender));
         mSideMenuAdapter.add("test2");
         mSideMenuAdapter.add("test3");
     }
@@ -127,6 +128,20 @@ public class MainActivity extends ActionBarActivity {
                 }
                 // キーボード非表示
                 HideKeyboard();
+            }
+        });
+
+        mSideMenuLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        Intent daily_pad_calendar_intent = new Intent();
+                        daily_pad_calendar_intent.setClassName(MainActivity.this.getPackageName(),MainActivity.this.getPackageName()	+ ".DailyPadCalenderActivity");
+                        MainActivity.this.startActivity(daily_pad_calendar_intent);
+                        break;
+                    default:
+                }
             }
         });
     }
