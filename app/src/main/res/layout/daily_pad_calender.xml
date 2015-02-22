@@ -2,38 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/rl_daily_pad_calender_main"
-    android:padding="25dp">
+    android:background="@drawable/daily_pad">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_year"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
         android:text="2015"
-        android:textSize="40dp"
-        android:gravity="center" />
+        android:textSize="50dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_month"
+        android:text="2"
+        android:textSize="50dp"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/txt_year"
+        android:layout_toRightOf="@+id/txt_year"
+        android:layout_toEndOf="@+id/txt_year" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_month"
-        android:layout_below="@+id/txt_year"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="2"
-        android:textSize="100dp"
-        android:gravity="center" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/txt_day"
         android:layout_below="@+id/txt_month"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
         android:text="20"
-        android:textSize="230dp"
+        android:textSize="200dp"
         android:gravity="center" />
 </RelativeLayout>

@@ -19,7 +19,11 @@ import com.example.memo.R;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DailyPadCalenderActivity extends ActionBarActivity {
     private FrameLayout mMainLayout;
@@ -33,11 +37,24 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
     private Calendar mCalender;
     private int mCount;
 
+    private HashMap<Integer,String> mWeekList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_pad_calender);
         mMainLayout = (FrameLayout)findViewById(R.id.fl_daily_pad_calender_main);
+        mWeekList = new HashMap<Integer,String>();
+
+        mWeekList.put(1,getString(R.string.sun));
+        mWeekList.put(2,getString(R.string.mon));
+        mWeekList.put(3,getString(R.string.tue));
+        mWeekList.put(4,getString(R.string.wed));
+        mWeekList.put(5,getString(R.string.thu));
+        mWeekList.put(6,getString(R.string.fri));
+        mWeekList.put(7,getString(R.string.sat));
+
+
         mShared = PreferenceManager.getDefaultSharedPreferences(this);
         String shared_calender = mShared.getString("daily_pad","");
         if(mCalender == null){
