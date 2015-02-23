@@ -112,8 +112,8 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         TextView month_view = (TextView)pad.findViewById(R.id.txt_month);
         TextView day_view = (TextView)pad.findViewById(R.id.txt_day);
 
-        String year_str = String.valueOf(mCalender.get(Calendar.YEAR));
-        String month_str = String.valueOf(mCalender.get(Calendar.MONTH)+1);
+        String year_str = String.valueOf(mCalender.get(Calendar.YEAR))+this.getString(R.string.year)+"    ";
+        String month_str = String.valueOf(mCalender.get(Calendar.MONTH)+1)+this.getString(R.string.month;)
         String day_str = String.valueOf(mCalender.get(Calendar.DATE));
 
         String date_str = year_str+"-"+month_str+"-"+day_str;
