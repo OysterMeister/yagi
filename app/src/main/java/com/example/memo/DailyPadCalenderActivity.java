@@ -1,5 +1,7 @@
 package com.example.memo;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -72,6 +74,11 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         View pad = makeDailyPad();
         mView = pad;
         mMainLayout.addView(mView);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
         mMainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +86,18 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
                 View pad = makeDailyPad();
                 mBeforeView = mView;
                 mView = pad;
+
+                Animator anime = AnimatorInflater.loadAnimator(DailyPadCalenderActivity.this, R.animator.daily_pad_out);
+                anime.setTarget(mMainLayout.getChildAt(0));
+                anime.start();
+//                try {
+//                    Thread.sleep(1300);
+//                }catch (InterruptedException e){
+//                    e.printStackTrace();
+//                }
+
+                mMainLayout.removeView(mMainLayout.getChildAt(0));
                 mMainLayout.addView(mView);
-                mMainLayout.removeView(mBeforeView);
             }
         });
     }
