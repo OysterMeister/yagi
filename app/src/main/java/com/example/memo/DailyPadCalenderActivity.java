@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memo.R;
 
@@ -63,6 +64,7 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
 
         Date date_now = new Date(System.currentTimeMillis());
         if(!shared_calender.equals("")){
+            Toast.makeText(this,shared_calender,Toast.LENGTH_SHORT).show();
             mCalender.setTime(Date.valueOf(shared_calender));
             Calendar calendar_now = Calendar.getInstance();
             int now = Integer.valueOf(calendar_now.get(Calendar.YEAR)+(calendar_now.get(Calendar.MONTH)+1)+calendar_now.get(Calendar.DATE));
@@ -73,11 +75,20 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         }else{
             mCalender.setTime(date_now);
         }
-        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        mView =  inflater.inflate(R.layout.daily_pad_calender,mMainLayout);
-        mNextView = inflater.inflate(R.layout.daily_pad_calender,mMainLayout);
-        makeDailyPad(mView);
+        View pad = makeDailyPad();
+        mView = pad;
+        mMainLayout.addView(mView);
+        mMainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCalender.add(Calendar.DATE,1);
+                View pad = makeDailyPad();
+                mBeforeView = mView;
+                mView = pad;
+                mMainLayout.addView(mView);
+                mMainLayout.removeView(mBeforeView);
+            }
+        });
 //        mCalender.add(Calendar.DATE,1);
 //        makeDailyPad(mNextView);
 
@@ -106,41 +117,38 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void makeDailyPad(View pad){
+    private View makeDailyPad(){
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View pad =  inflater.inflate(R.layout.daily_pad_calender,null);
         RelativeLayout pad_main = (RelativeLayout)pad.findViewById(R.id.rl_daily_pad_calender_main);
         TextView year_view = (TextView)pad.findViewById(R.id.txt_year);
         TextView month_view = (TextView)pad.findViewById(R.id.txt_month);
         TextView day_view = (TextView)pad.findViewById(R.id.txt_day);
+        TextView week_view = (TextView)pad.findViewById(R.id.txt_week);
 
-        String year_str = String.valueOf(mCalender.get(Calendar.YEAR))+this.getString(R.string.year)+"    ";
-        String month_str = String.valueOf(mCalender.get(Calendar.MONTH)+1)+this.getString(R.string.month;)
+        String year_str = String.valueOf(mCalender.get(Calendar.YEAR))+this.getString(R.string.year);
+        String month_str = String.valueOf(mCalender.get(Calendar.MONTH)+1) + this.getString(R.string.month);
         String day_str = String.valueOf(mCalender.get(Calendar.DATE));
 
+        StringBuilder date_shared = new StringBuilder();
+        date_shared.append(String.valueOf(mCalender.get(Calendar.YEAR)));
+        date_shared.append("-");
+        date_shared.append(String.valueOf(mCalender.get(Calendar.MONTH)));
+        date_shared.append("-");
+        date_shared.append(String.valueOf(mCalender.get(Calendar.DATE)));
+
         String date_str = year_str+"-"+month_str+"-"+day_str;
-        mShared.edit().putString("daily_pad",date_str).commit();
+        mShared.edit().putString("daily_pad",date_shared.toString()).commit();
 
         year_view.setText(year_str);
         month_view.setText(month_str);
         day_view.setText(day_str);
+        week_view.setText(mWeekList.get(mCalender.get(Calendar.DAY_OF_WEEK)));
 
-        pad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBeforeView = mView;
-                mView = mNextView;
-                mCalender.add(Calendar.DATE,1);
-                makeDailyPad(mView);
-//                if(v.equals(mMainLayout.getChildAt(0))){
-//                    mMainLayout.removeView(mView);
-//                    makeDailyPad(mNextView);
-//                    ViewGroup parent_next = (ViewGroup)mNextView.getParent();
-//                    if(parent_next !=null){
-//                        parent_next.removeView(mNextView);
-//                    }
-//                    mMainLayout.addView(mNextView);
-//                }
-            }
-        });
-
+        ViewGroup parent = (ViewGroup)pad.getParent();
+        if(parent !=null){
+            parent.removeView(pad);
+        }
+        return pad;
     }
 }
