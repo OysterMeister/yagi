@@ -4,7 +4,6 @@
     <string name="app_name">Memo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
     <string name="action_memo">メモる</string>
     <string name="add_memo">メモしました！</string>
     <string name="err_msg1">何か入力してね！</string>
@@ -12,5 +11,4 @@
     <string name="del_memo">削除しました</string>
     <string name="action_all_clear">全消し</string>
     <string name="action_finish">終了</string>
-
 </resources>
