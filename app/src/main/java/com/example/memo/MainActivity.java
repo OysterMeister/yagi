@@ -26,7 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 /**
- * 最強のメモ帳testtest
+ * 最強のメモ帳 abeshi
  */
 public class MainActivity extends ActionBarActivity {
 
