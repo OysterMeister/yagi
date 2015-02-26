@@ -29,32 +29,31 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
 
     private Calendar mCalender;
 
-    private HashMap<Integer,String> mWeekList;
+    private HashMap<Integer, String> mWeekList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_pad_calender);
-        mMainLayout = (FrameLayout)findViewById(R.id.fl_daily_pad_calender_main);
+        mMainLayout = (FrameLayout) findViewById(R.id.fl_daily_pad_calender_main);
         mWeekList = new HashMap<>();
 
-        mWeekList.put(1,getString(R.string.sun));
-        mWeekList.put(2,getString(R.string.mon));
-        mWeekList.put(3,getString(R.string.tue));
-        mWeekList.put(4,getString(R.string.wed));
-        mWeekList.put(5,getString(R.string.thu));
-        mWeekList.put(6,getString(R.string.fri));
-        mWeekList.put(7,getString(R.string.sat));
+        mWeekList.put(1, getString(R.string.sun));
+        mWeekList.put(2, getString(R.string.mon));
+        mWeekList.put(3, getString(R.string.tue));
+        mWeekList.put(4, getString(R.string.wed));
+        mWeekList.put(5, getString(R.string.thu));
+        mWeekList.put(6, getString(R.string.fri));
+        mWeekList.put(7, getString(R.string.sat));
 
 
         mShared = PreferenceManager.getDefaultSharedPreferences(this);
-        String shared_calender = mShared.getString("daily_pad","");
-        if(mCalender == null){
+        String shared_calender = mShared.getString("daily_pad", "");
+        if (mCalender == null) {
             mCalender = Calendar.getInstance();
         }
 
         Date date_now = new Date(System.currentTimeMillis());
-        //いろいろやろうと思ったけど面倒くさい
 //        if(!shared_calender.equals("")){
 //            Toast.makeText(this,shared_calender,Toast.LENGTH_SHORT).show();
 //            mCalender.setTime(Date.valueOf(shared_calender));
@@ -76,7 +75,7 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         mMainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCalender.add(Calendar.DATE,1);
+                mCalender.add(Calendar.DATE, 1);
                 View pad = makeDailyPad();
                 mBeforeView = mView;
                 mView = pad;
@@ -108,17 +107,17 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private View makeDailyPad(){
-        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View pad =  inflater.inflate(R.layout.daily_pad_calender,null);
-        RelativeLayout pad_main = (RelativeLayout)pad.findViewById(R.id.rl_daily_pad_calender_main);
-        TextView year_view = (TextView)pad.findViewById(R.id.txt_year);
-        TextView month_view = (TextView)pad.findViewById(R.id.txt_month);
-        TextView day_view = (TextView)pad.findViewById(R.id.txt_day);
-        TextView week_view = (TextView)pad.findViewById(R.id.txt_week);
+    private View makeDailyPad() {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View pad = inflater.inflate(R.layout.daily_pad_calender, null);
+        RelativeLayout pad_main = (RelativeLayout) pad.findViewById(R.id.rl_daily_pad_calender_main);
+        TextView year_view = (TextView) pad.findViewById(R.id.txt_year);
+        TextView month_view = (TextView) pad.findViewById(R.id.txt_month);
+        TextView day_view = (TextView) pad.findViewById(R.id.txt_day);
+        TextView week_view = (TextView) pad.findViewById(R.id.txt_week);
 
-        String year_str = String.valueOf(mCalender.get(Calendar.YEAR))+this.getString(R.string.year);
-        String month_str = String.valueOf(mCalender.get(Calendar.MONTH)+1) + this.getString(R.string.month);
+        String year_str = String.valueOf(mCalender.get(Calendar.YEAR)) + this.getString(R.string.year);
+        String month_str = String.valueOf(mCalender.get(Calendar.MONTH) + 1) + this.getString(R.string.month);
         String day_str = String.valueOf(mCalender.get(Calendar.DATE));
 
         StringBuilder date_shared = new StringBuilder();
@@ -128,15 +127,15 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
         date_shared.append("-");
         date_shared.append(String.valueOf(mCalender.get(Calendar.DATE)));
 
-        mShared.edit().putString("daily_pad",date_shared.toString()).commit();
+        mShared.edit().putString("daily_pad", date_shared.toString()).commit();
 
         year_view.setText(year_str + month_str);
 //        month_view.setText(month_str);
         day_view.setText(day_str);
         week_view.setText(mWeekList.get(mCalender.get(Calendar.DAY_OF_WEEK)));
 
-        ViewGroup parent = (ViewGroup)pad.getParent();
-        if(parent !=null){
+        ViewGroup parent = (ViewGroup) pad.getParent();
+        if (parent != null) {
             parent.removeView(pad);
         }
 
