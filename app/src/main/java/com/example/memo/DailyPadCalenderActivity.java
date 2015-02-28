@@ -30,6 +30,7 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
     private View mNextView;
 
     private Calendar mCalender;
+    private Animator mAnimator;
 
     private HashMap<Integer, String> mWeekList;
 
@@ -37,6 +38,8 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_pad_calender);
+        mAnimator = AnimatorInflater.loadAnimator(DailyPadCalenderActivity.this, R.animator.daily_pad_out);
+
         mMainLayout = (FrameLayout) findViewById(R.id.fl_daily_pad_calender_main);
         mWeekList = new HashMap<>();
 
@@ -71,8 +74,8 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
 
         mCalender.setTime(date_now);
 
-        View pad = makeDailyPad();
-        mView = pad;
+        mView = makeDailyPad();
+        mAnimator.setTarget(mView);
         mMainLayout.addView(mView);
     }
 
@@ -83,21 +86,12 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCalender.add(Calendar.DATE, 1);
-                View pad = makeDailyPad();
-                mBeforeView = mView;
-                mView = pad;
-
-                Animator anime = AnimatorInflater.loadAnimator(DailyPadCalenderActivity.this, R.animator.daily_pad_out);
-                anime.setTarget(mMainLayout.getChildAt(0));
-                anime.start();
-//                try {
-//                    Thread.sleep(1300);
-//                }catch (InterruptedException e){
-//                    e.printStackTrace();
-//                }
+                mAnimator.start();
+                mView = makeDailyPad();
+                mAnimator.setTarget(mView);
+                mMainLayout.addView(mView);
 
                 mMainLayout.removeView(mMainLayout.getChildAt(0));
-                mMainLayout.addView(mView);
             }
         });
     }
