@@ -21,6 +21,10 @@
             android:name=".DailyPadCalenderActivity"
             android:label="@string/title_activity_daily_pad_calender" >
         </activity>
+        <activity
+            android:name=".OmikujiActivity"
+            android:label="@string/title_activity_omikuji" >
+        </activity>
     </application>
 
 </manifest>

@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
         // ListViewとAdapterを結びつける
         mSideMenuLv.setAdapter(mSideMenuAdapter);
         mSideMenuAdapter.add(this.getString(R.string.title_activity_daily_pad_calender));
-        mSideMenuAdapter.add("test2");
+        mSideMenuAdapter.add("おみくじ");
         mSideMenuAdapter.add("test3");
     }
 
@@ -139,6 +139,11 @@ public class MainActivity extends ActionBarActivity {
                         Intent daily_pad_calendar_intent = new Intent();
                         daily_pad_calendar_intent.setClassName(MainActivity.this.getPackageName(),MainActivity.this.getPackageName()	+ ".DailyPadCalenderActivity");
                         MainActivity.this.startActivity(daily_pad_calendar_intent);
+                        break;
+                    case 1:
+                        // おみくじ画面に遷移する
+                        Intent mIntent = new Intent(mContext, OmikujiActivity.class);
+                        mContext.startActivity(mIntent);
                         break;
                     default:
                 }
