@@ -1,5 +1,7 @@
 package com.example.memo;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
     private View mNextView;
 
     private Calendar mCalender;
+    private Animator mAnimator;
 
     private HashMap<Integer, String> mWeekList;
 
@@ -35,6 +38,8 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_pad_calender);
+        mAnimator = AnimatorInflater.loadAnimator(DailyPadCalenderActivity.this, R.animator.daily_pad_out);
+
         mMainLayout = (FrameLayout) findViewById(R.id.fl_daily_pad_calender_main);
         mWeekList = new HashMap<>();
 
@@ -69,18 +74,24 @@ public class DailyPadCalenderActivity extends ActionBarActivity {
 
         mCalender.setTime(date_now);
 
-        View pad = makeDailyPad();
-        mView = pad;
+        mView = makeDailyPad();
+        mAnimator.setTarget(mView);
         mMainLayout.addView(mView);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
         mMainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCalender.add(Calendar.DATE, 1);
-                View pad = makeDailyPad();
-                mBeforeView = mView;
-                mView = pad;
+                mAnimator.start();
+                mView = makeDailyPad();
+                mAnimator.setTarget(mView);
                 mMainLayout.addView(mView);
-                mMainLayout.removeView(mBeforeView);
+
+                mMainLayout.removeView(mMainLayout.getChildAt(0));
             }
         });
     }
