@@ -11,4 +11,6 @@
     <string name="del_memo">削除しました</string>
     <string name="action_all_clear">全消し</string>
     <string name="action_finish">終了</string>
+    <string name="title_activity_omikuji">OmikujiActivity</string>
+
 </resources>
