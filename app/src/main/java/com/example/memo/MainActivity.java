@@ -21,7 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import android.media.MediaRecorder;
+import android.os.Environment;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -33,6 +34,8 @@ public class MainActivity extends ActionBarActivity {
     /* メンバ変数 */
     private Context mContext;           // コンテキスト
     private Button mButton;             // メモるボタン
+    private Button mButton2;
+    private Button mButton3;
     private EditText mEditText;         // 入力フォーム
     private ListView mListView;         // リストビュー
     private ArrayAdapter mAdapter;      // アダプター
@@ -42,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;    // ドロワートグル
     private ListView mSideMenuLv;                   // サイドメニューリストビュー
     private ArrayAdapter mSideMenuAdapter;          // サイドメニューアダプター
+    MediaRecorder record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,8 @@ public class MainActivity extends ActionBarActivity {
     public void initialization() {
         mContext = this;                                                            // コンテキスト
         mButton = (Button) findViewById(R.id.button);                               // メモるボタン
+        mButton2 = (Button) findViewById(R.id.button2);
+        mButton3 = (Button) findViewById(R.id.button3);
         mEditText = (EditText) findViewById(R.id.editText);                         // 入力フォーム
         mListView = (ListView) findViewById(R.id.listView);                         // リストビュー
         mAdapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1); // アダプター
@@ -128,6 +134,40 @@ public class MainActivity extends ActionBarActivity {
                 }
                 // キーボード非表示
                 HideKeyboard();
+            }
+        });
+        //録音ボタン押下時の処理だよ
+        mButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                record = new MediaRecorder();
+                record.setAudioSource(MediaRecorder.AudioSource.MIC);
+                record.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                record.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+
+                //保存先
+                //String filePath = "/audio.3gp";
+                String filePath = Environment.getExternalStorageDirectory() + "/audio.mp3";
+                record.setOutputFile(filePath);
+
+                //録音準備
+                try{
+                    record.prepare();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                //録音開始
+                record.start();
+            }
+        });
+        //ストップボタン
+        mButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                record.stop();
+                record.reset();   //オブジェクトのリセット
+                //release()前であればsetAudioSourceメソッドを呼び出すことで再利用可能
+                record.release(); //Recorderオブジェクトの解放
             }
         });
 
