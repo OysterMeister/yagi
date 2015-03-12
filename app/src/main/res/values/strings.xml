@@ -11,6 +11,11 @@
     <string name="del_memo">削除しました</string>
     <string name="action_all_clear">全消し</string>
     <string name="action_finish">終了</string>
+    <string name="omikuji_001">おみくじアプリ</string>
+    <string name="omikuji_002">おみくじを引く</string>
+    <string name="omikuji_003">OmikujiActivity</string>
+    <string name="omikuji_004">OmikujiActivity</string>
+    <string name="omikuji_005">OmikujiActivity</string>
     <string name="title_activity_omikuji">OmikujiActivity</string>
     <string name="title_activity_dentaku">電卓</string>
 
