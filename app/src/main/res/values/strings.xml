@@ -16,5 +16,7 @@
     <string name="omikuji_003">OmikujiActivity</string>
     <string name="omikuji_004">OmikujiActivity</string>
     <string name="omikuji_005">OmikujiActivity</string>
+    <string name="title_activity_omikuji">OmikujiActivity</string>
+    <string name="title_activity_dentaku">電卓</string>
 
 </resources>

@@ -98,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
         mSideMenuLv.setAdapter(mSideMenuAdapter);
         mSideMenuAdapter.add(this.getString(R.string.title_activity_daily_pad_calender));
         mSideMenuAdapter.add("おみくじ");
-        mSideMenuAdapter.add("test3");
+        mSideMenuAdapter.add("電卓");
     }
 
     /**
@@ -144,6 +144,11 @@ public class MainActivity extends ActionBarActivity {
                         // おみくじ画面に遷移する
                         Intent mIntent = new Intent(mContext, OmikujiActivity.class);
                         mContext.startActivity(mIntent);
+                        break;
+                    case 2:
+                        // 電卓に遷移する
+                        Intent mDentakuIntent = new Intent(mContext, DentakuActivity.class);
+                        mContext.startActivity(mDentakuIntent);
                         break;
                     default:
                 }

@@ -25,6 +25,10 @@
             android:name=".OmikujiActivity"
             android:label="@string/omikuji_001" >
         </activity>
+        <activity
+            android:name=".DentakuActivity"
+            android:label="@string/title_activity_dentaku" >
+        </activity>
     </application>
 
 </manifest>
