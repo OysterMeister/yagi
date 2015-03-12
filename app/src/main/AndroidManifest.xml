@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".OmikujiActivity"
-            android:label="@string/title_activity_omikuji" >
+            android:label="@string/omikuji_001" >
         </activity>
     </application>
 
