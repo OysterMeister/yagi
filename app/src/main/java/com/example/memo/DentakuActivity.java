@@ -557,6 +557,7 @@ public class DentakuActivity extends ActionBarActivity {
      * シークレット
      */
     private void setSeacredMode() {
+        // 強制表示
         mSecretFlag = true;
         if (mSecretFlag) {
             Random r = new Random();
