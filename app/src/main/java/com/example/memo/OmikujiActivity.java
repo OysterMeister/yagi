@@ -39,6 +39,10 @@ public class OmikujiActivity extends ActionBarActivity {
     private LinearLayout mResultLl;
     private TextView mResult1Tv;
     private TextView mResult2Tv;
+    private Boolean mRunFlg;
+    private Integer mResultNum;
+    private String mResultTitle;
+    private String mResultDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class OmikujiActivity extends ActionBarActivity {
      * 初期化
      */
     private void initialization() {
+        mRunFlg = false;
         mContext = this;
         mOmikujiBtn = (Button) findViewById(R.id.omikuji_hiku_btn);
         mOmikujiIv = (ImageView) findViewById(R.id.omikuji_iv);
@@ -88,188 +93,175 @@ public class OmikujiActivity extends ActionBarActivity {
         mOmikujiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // 抽選中か判定
+                if (mRunFlg) {
+                    return;
+                }
+                mRunFlg = true;
+
+                // 一旦非表示
                 setGone();
+
+                // 抽選を行う
+                runFortune();
 
                 // おみくじにアニメーションを設定
                 // 表示
                 mOmikujiIv.setVisibility(View.VISIBLE);
+
                 // フェードイン表示
                 CommonUtil.animateAlphaVisible(mOmikujiIv, 1);
+
                 // 移動
                 CommonUtil.animateTranslationY(mOmikujiIv, 2, -550f);
-                // 回転
-                CommonUtil.animateRotation(mOmikujiIv, 3);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // フェードアウト表示
-                        CommonUtil.animateAlphaInVisible(mOmikujiIv, 1);
 
-                        // 結果を表示
+                // 回転
+                CommonUtil.animateRotation(mOmikujiIv, 5);
+
+                switch (mResultNum) {
+                    case 0:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // 表示
-                                mHitujiOdoruFukidasiIv.setVisibility(View.VISIBLE);
-                                mResultLl.setVisibility(View.VISIBLE);
-                                mResult1Tv.setVisibility(View.VISIBLE);
-                                mResult2Tv.setVisibility(View.VISIBLE);
 
-                                Random randomGenerator = new Random();
-                                String[] results = {
-                                        "大吉",
-                                        "中吉",
-                                        "小吉",
-                                        "吉",
-                                        "半吉",
-                                        "末吉",
-                                        "末小吉",
-                                        "凶",
-                                        "小凶",
-                                        "半凶",
-                                        "末凶",
-                                        "大凶"
-                                };
-                                int num = randomGenerator.nextInt(results.length);
-                                String sResult2 = "";
-                                switch (num) {
-                                    case 0:
-                                        sResult2 = "やったね";
-                                        break;
-                                    case 12:
-                                        sResult2 = "ざんねん";
-                                        break;
-                                    default:
-                                        sResult2 = "ふつうです";
-                                        break;
-                                }
-                                mResult1Tv.setText(results[num]);
-                                mResult2Tv.setText(sResult2);
+                                // フェードアウト表示
+                                CommonUtil.animateAlphaInVisible(mOmikujiIv, 1);
+
+                                // 結果を表示
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 表示
+                                        mHitujiOdoruFukidasiIv.setVisibility(View.VISIBLE);
+                                        mResultLl.setVisibility(View.VISIBLE);
+                                        mResult1Tv.setVisibility(View.VISIBLE);
+                                        mResult2Tv.setVisibility(View.VISIBLE);
+
+                                        // 結果
+                                        mResult1Tv.setText(mResultTitle);
+                                        mResult2Tv.setText(mResultDetail);
+
+                                        // 終了
+                                        mRunFlg = false;
+                                    }
+                                }, 0000);
                             }
-                        }, 1500);
+                        }, 5000);
 
-//                        // ひつじが結果を書く
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                // 表示
-//                                mHitujiKakuIv.setVisibility(View.VISIBLE);
-//
-//
-//                                // フェードイン表示
-//                                CommonUtil.animateAlphaVisible(mHitujiKakuIv, 2);
-//                                new Handler().postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        // フェードアウト表示
-//                                        CommonUtil.animateAlphaInVisible(mHitujiKakuIv, 2);
-//
-//
-//                                    }
-//                                }, 1500);
-//                            }
-//                        }, 1000);
-                    }
-                }, 2000);
+                        break;
+                    default:
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                // フェードアウト表示
+                                CommonUtil.animateAlphaInVisible(mOmikujiIv, 1);
+
+                                // 結果を表示
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 表示
+                                        mHitujiOdoruFukidasiIv.setVisibility(View.VISIBLE);
+                                        mResultLl.setVisibility(View.VISIBLE);
+                                        mResult1Tv.setVisibility(View.VISIBLE);
+                                        mResult2Tv.setVisibility(View.VISIBLE);
+
+                                        // 結果
+                                        mResult1Tv.setText(mResultTitle);
+                                        mResult2Tv.setText(mResultDetail);
+
+                                        // 終了
+                                        mRunFlg = false;
+                                    }
+                                }, 1500);
+
+                            }
+                        }, 2000);
+                        break;
+                }
             }
         });
     }
 
-
     /**
-     * 2秒かけてターゲットを表示した後に、2秒かけて引数に与えた角度と距離の位置に回転させながら移動させる
-     *
-     * @param target
-     * @param degree
-     * @param distance
+     * おみくじ抽選
      */
-    private void animateAnimatorSetSample(ImageView target, float degree, float distance) {
+    private void runFortune() {
+        Random randomGenerator = new Random();
+        String[] sResultTitle = {
+                "超大吉",
+                "超超大吉",
+                "まぁまぁ大吉",
+                "ぎりぎり大吉",
+                "あまりよくない大吉",
+                "ほどほど大吉",
+                "ぼちぼち大吉",
+                "あんまり大吉",
+                "かろうじて大吉",
+                "ほどよく大吉",
+                "なんとなく大吉",
+                "大凶"
+        };
+        mResultNum = randomGenerator.nextInt(sResultTitle.length);
+        mResultNum = 11;
 
-        // AnimatorSetに渡すAnimatorのリストです
-        List<Animator> animatorList = new ArrayList<Animator>();
+        String sResultDetail = "";
+        switch (mResultNum) {
+            case 0:
+                sResultDetail = "全体的な金運は非常に良く勝負運もあります。謙虚な姿勢が成功のカギ。";
+                break;
+            case 1:
+                sResultDetail = "ラッキースポットは大勢の人が集まる場所。笑顔であいさつをすると運気上昇。";
+                break;
+            case 2:
+                sResultDetail = "握手やハグなどまめなスキンシップを心がけよう！自然と運気も上昇。";
+                break;
+            case 3:
+                sResultDetail = "家族や愛しい人への思いやりで運気がアップ！恋愛運も少しずつ上昇します。";
+                break;
+            case 4:
+                sResultDetail = "即断、即決の行動力とバランス感覚が人気運とお金の流れを呼び込みます。";
+                break;
+            case 5:
+                sResultDetail = "アイデアや感性が直接お金に結びつく強運の時ですがお金の管理には注意。";
+                break;
+            case 6:
+                sResultDetail = "先見の明が働く時です。流行の一歩先を行くセンスが金運に結びつきます。";
+                break;
+            case 7:
+                sResultDetail = "金運向上のキーワードは社会貢献。社会に役立つ行動は自分に戻ります。";
+                break;
+            case 8:
+                sResultDetail = "ラッキーカラーはシルバー。芸術的な趣味を始めると全体運がアップしそう。";
+                break;
+            case 9:
+                sResultDetail = "道を切りひらいていくパワーが満ちる時です。周囲の意見をよく聞いて。";
+                break;
+            case 10:
+                sResultDetail = "自分よりも弱い者の世話や面倒を見ることで全体運が大幅にアップします。";
+                break;
+            case 11:
+                sResultDetail = "何をやってもうまくいかない。今日は最悪です。";
+                break;
+            default:
+                sResultDetail = "ふつうです";
+                break;
+        }
 
-        // alphaプロパティを0fから1fに変化させます
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(target, "alpha", 0f, 1f);
-        // 2秒かけて実行させます
-        alphaAnimator.setDuration(2000);
-        // リストに追加します
-        animatorList.add(alphaAnimator);
-
-        // 距離と半径から到達点となるX座標、Y座標を求めます
-        float toX = (float) (distance * Math.cos(Math.toRadians(degree)));
-        float toY = (float) (distance * Math.sin(Math.toRadians(degree)));
-
-        // translationXプロパティを0fからtoXに変化させます
-        PropertyValuesHolder holderX = PropertyValuesHolder.ofFloat("translationX", 0f, toX);
-        // translationYプロパティを0fからtoYに変化させます
-        PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", 0f, toY);
-        // rotationプロパティを0fから360に変化させます
-        PropertyValuesHolder holderRotaion = PropertyValuesHolder.ofFloat("rotation", 0f, 360f);
-
-        // targetに対してholderX, holderY, holderRotationを同時に実行します
-        ObjectAnimator translationXYAnimator =
-                ObjectAnimator.ofPropertyValuesHolder(target, holderX, holderY, holderRotaion);
-        // 2秒かけて実行させます
-        translationXYAnimator.setDuration(2000);
-        // リストに追加します
-        animatorList.add(translationXYAnimator);
-
-        final AnimatorSet animatorSet = new AnimatorSet();
-        // リストのAnimatorを順番に実行します
-        animatorSet.playSequentially(animatorList);
-
-        // アニメーションを開始します
-        animatorSet.start();
+        mResultTitle = sResultTitle[mResultNum];
+        mResultDetail = sResultDetail;
     }
 }
-
-
-//        mOmikujiBtn = (ImageView) findViewById(R.id.myButton);
-//        mOmikujiTv = (TextView) findViewById(R.id.myText);
-//        mOmikujiBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Random randomGenerator = new Random();
-//                String[] results = {
-//                        "大吉",
-//                        "中吉",
-//                        "小吉",
-//                        "吉",
-//                        "半吉",
-//                        "末吉",
-//                        "末小吉",
-//                        "凶",
-//                        "小凶",
-//                        "半凶",
-//                        "末凶",
-//                        "大凶"
-//                };
-//                int num = randomGenerator.nextInt(results.length);
-//                // String result = Integer.toString(num);
-//                // if (num == 0) {
-//                // tv.setTextColor(Color.RED);
-//                // tv.setTextColor(Color.parseColor("#FF0000"));
-//                // mOmikujiTv.setTextColor(Color.parseColor("red"));
-//                // } else {
-//                //mOmikujiTv.setTextColor(Color.BLACK);
-//                // }
-//                //mOmikujiTv.setText(results[num]);
-//
-//                ImageView imageView = (ImageView) findViewById(R.id.hituji);
-//                imageView.setImageResource(R.drawable.hituji_neru);
-//                switch (num) {
-//                    case 0:
-//                        imageView.setImageResource(R.drawable.hituji_daikiti);
-//                        break;
-//                    case 1:
-//
-//                        break;
-//                    case 2:
-//
-//                        break;
-//                }
-//                mOmikujiTv.setText(results[num]);
-//
-//                animateAnimatorSetSample(mOmikujiBtn,90,-1000);
-//            }
-//        });
