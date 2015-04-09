@@ -3,247 +3,261 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/secret_long_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/secret_iv"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/secret_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/number_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="start"
+                        android:gravity="right"
+                        android:padding="15dp"
+                        android:text="0"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/enzanshi_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text=""
+                        android:textSize="30sp"
+                        android:layout_alignParentBottom="true" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- 789C/AC -->
+
+            <LinearLayout
+                android:id="@+id/key_789_ll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:alpha="0.4"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/num7_bt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone" />
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_7" />
 
-                <TextView
-                    android:id="@+id/number_tv"
+                <Button
+                    android:id="@+id/num8_bt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="start"
-                    android:gravity="right"
-                    android:padding="15dp"
-                    android:text="0"
-                    android:textSize="30sp" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_8" />
 
-                <TextView
-                    android:id="@+id/enzanshi_tv"
+                <Button
+                    android:id="@+id/num9_bt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_9" />
+
+                <Button
+                    android:id="@+id/clear_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_c" />
+
+                <Button
+                    android:id="@+id/del_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_ac" />
+            </LinearLayout>
+
+            <!-- 456-÷ -->
+
+            <LinearLayout
+                android:id="@+id/key_456_ll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="0.4"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/num4_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_4" />
+
+                <Button
+                    android:id="@+id/num5_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_5" />
+
+                <Button
+                    android:id="@+id/num6_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_6" />
+
+                <Button
+                    android:id="@+id/hiku_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_hiku" />
+
+                <Button
+                    android:id="@+id/waru_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_waru" />
+
+            </LinearLayout>
+
+            <!-- 123+× -->
+
+            <LinearLayout
+                android:id="@+id/key_123_ll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="0.4"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/num1_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_1" />
+
+                <Button
+                    android:id="@+id/num2_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_2" />
+
+                <Button
+                    android:id="@+id/num3_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_3" />
+
+                <Button
+                    android:id="@+id/tasu_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_tasu" />
+
+                <Button
+                    android:id="@+id/kakeru_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_kakeru" />
+
+            </LinearLayout>
+
+            <!-- 000.= -->
+
+            <LinearLayout
+                android:id="@+id/key_000_ll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="0.4"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sp1_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonshape_gray"
+                    android:shadowColor="#000000"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="30sp"
-                    android:layout_alignParentBottom="true" />
-            </RelativeLayout>
-        </LinearLayout>
+                    android:visibility="invisible" />
 
-        <!-- 789C/AC -->
+                <Button
+                    android:id="@+id/num0_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_0" />
 
-        <LinearLayout
-            android:id="@+id/key_789_ll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/dot_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_dot" />
 
-            <Button
-                android:id="@+id/num7_bt"
+                <Button
+                    android:id="@+id/cmp_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_cmp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/banner_tv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_7" />
-
-            <Button
-                android:id="@+id/num8_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_8" />
-
-            <Button
-                android:id="@+id/num9_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_9" />
-
-            <Button
-                android:id="@+id/clear_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_c" />
-
-            <Button
-                android:id="@+id/del_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_ac" />
-        </LinearLayout>
-
-        <!-- 456-÷ -->
-
-        <LinearLayout
-            android:id="@+id/key_456_ll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/num4_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_4" />
-
-            <Button
-                android:id="@+id/num5_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_5" />
-
-            <Button
-                android:id="@+id/num6_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_6" />
-
-            <Button
-                android:id="@+id/hiku_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_hiku" />
-
-            <Button
-                android:id="@+id/waru_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_waru" />
-
-        </LinearLayout>
-
-        <!-- 123+× -->
-
-        <LinearLayout
-            android:id="@+id/key_123_ll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/num1_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_1" />
-
-            <Button
-                android:id="@+id/num2_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_2" />
-
-            <Button
-                android:id="@+id/num3_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_3" />
-
-            <Button
-                android:id="@+id/tasu_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_tasu" />
-
-            <Button
-                android:id="@+id/kakeru_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_kakeru" />
-
-        </LinearLayout>
-
-        <!-- 000.= -->
-
-        <LinearLayout
-            android:id="@+id/key_000_ll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/sp1_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/buttonshape_gray"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text=""
-                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="バナーバナーバナー"
                 android:textSize="30sp"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/num0_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_0" />
-
-            <Button
-                android:id="@+id/dot_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/btn_dot" />
-
-            <Button
-                android:id="@+id/cmp_bt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.75"
-                android:layout_margin="5dp"
-                android:background="@drawable/btn_cmp" />
+                android:visibility="gone" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/banner_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="バナーバナーバナー"
-            android:textSize="30sp"
-            android:visibility="gone" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <!-- nav drawer:ここをstart側に寄せる -->
     <LinearLayout

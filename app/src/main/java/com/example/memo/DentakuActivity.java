@@ -2,6 +2,7 @@ package com.example.memo;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
@@ -19,11 +20,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.memo.common.CommonUtil;
 
 /**
  * 自動計算機（MyCalc）
@@ -54,6 +58,12 @@ public class DentakuActivity extends ActionBarActivity {
     /* 表示ビュー */
     private TextView mNumberTv;     // 数値表示ビュー
     private TextView mEnzanshiTv;   // 演算子表示ビュー
+    /* ボタン行 */
+    private ImageView mSecletLongIv;
+    private LinearLayout mKey789Ll;
+    private LinearLayout mKey456Ll;
+    private LinearLayout mKey123Ll;
+    private LinearLayout mKey000Ll;
     /* 数値ボタン0～9 */
     private Button mNum0Btn;
     private Button mNum1Btn;
@@ -79,6 +89,7 @@ public class DentakuActivity extends ActionBarActivity {
     private String sZenkou;     // 前項
     private String sKoukou;     // 後項
     /* シークレット */
+    private Boolean mSecretFlag;
     private ImageView mSecretIv;
     /* トースト */
     private Toast mToast;
@@ -102,6 +113,9 @@ public class DentakuActivity extends ActionBarActivity {
         mNumberTv.setTextSize(disp.getWidth() / 22);
         mEnzanshiTv.setTextSize(disp.getWidth() / 22);
 
+        // シークレットモード
+        setSeacredMode();
+
         // クリックイベント
         click();
     }
@@ -117,6 +131,15 @@ public class DentakuActivity extends ActionBarActivity {
         mNumberTv.setText("0");
         mEnzanshiTv = (TextView) findViewById(R.id.enzanshi_tv);
         mEnzanshiTv.setText(" ");
+        mSecletLongIv = (ImageView) findViewById(R.id.secret_long_iv);
+        mKey789Ll = (LinearLayout) findViewById(R.id.key_789_ll);
+        mKey456Ll = (LinearLayout) findViewById(R.id.key_456_ll);
+        mKey123Ll = (LinearLayout) findViewById(R.id.key_123_ll);
+        mKey000Ll = (LinearLayout) findViewById(R.id.key_000_ll);
+//        mKey789Ll.setAlpha(120);
+//        mKey456Ll.setAlpha(120);
+//        mKey123Ll.setAlpha(120);
+//        mKey000Ll.setAlpha(120);
         mNum0Btn = (Button) findViewById(R.id.num0_bt);
         mNum1Btn = (Button) findViewById(R.id.num1_bt);
         mNum2Btn = (Button) findViewById(R.id.num2_bt);
@@ -139,6 +162,7 @@ public class DentakuActivity extends ActionBarActivity {
         sZenkou = "";
         sKoukou = "";
         // シークレット
+        mSecretFlag = false;
         mSecretIv = (ImageView) findViewById(R.id.secret_iv);
     }
 
@@ -179,22 +203,15 @@ public class DentakuActivity extends ActionBarActivity {
                 //◆小数点
                 if (sCalc.contains(STA_DOT)) {
                     // 既に計算表示部に少数点あり
-                    // プロッシー画像
-                    if (sCalc.equals("2641.")) {
-                        mSecretIv.setBackgroundResource(R.drawable.prossy_m);
-                        mSecretIv.setVisibility(View.VISIBLE);
-                    }
-                    // 元画像
+                    // シークレットモードON
                     if (sCalc.equals("7777.")) {
-                        mSecretIv.setBackgroundResource(R.drawable.sumahodeyorokobu);
-                        mSecretIv.setVisibility(View.VISIBLE);
+                        mSecretFlag = true;
+                        setSeacredMode();
                     }
-                    // クリア
+                    // シークレットモードOFF
                     if (sCalc.equals("1234.")) {
-                        mSecretIv.setBackgroundResource(0);
-                        mSecretIv.setVisibility(View.GONE);
-                        // シークレット
-                        //animateAlpha(mSecretIv);
+                        mSecretFlag = false;
+                        setSeacredMode();
                     }
                 } else {
                     // 未だ計算表示部に少数点なし
@@ -534,5 +551,54 @@ public class DentakuActivity extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         // DrawerToggleの同期
         mDrawerToggle.syncState();
+    }
+
+    /**
+     * シークレット
+     */
+    private void setSeacredMode() {
+        // 強制表示
+        mSecretFlag = true;
+        if (mSecretFlag) {
+            Random r = new Random();
+            int n = r.nextInt(5);
+            switch (n) {
+                case 0:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_01));
+                    break;
+                case 1:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_02));
+                    break;
+                case 2:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_03));
+                    break;
+                case 3:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_04));
+                    break;
+                case 4:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_05));
+                    break;
+            }
+        } else {
+            Random r = new Random();
+            int n = r.nextInt(5);
+            switch (n) {
+                case 0:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_01));
+                    break;
+                case 1:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_02));
+                    break;
+                case 2:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_03));
+                    break;
+                case 3:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_04));
+                    break;
+                case 4:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_05));
+                    break;
+            }
+        }
     }
 }
