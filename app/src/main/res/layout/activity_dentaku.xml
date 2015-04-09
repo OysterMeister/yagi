@@ -24,6 +24,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/display_rl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -64,7 +65,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:alpha="0.4"
                 android:orientation="horizontal">
 
                 <Button
@@ -110,7 +110,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:alpha="0.4"
                 android:orientation="horizontal">
 
                 <Button
@@ -157,7 +156,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:alpha="0.4"
                 android:orientation="horizontal">
 
                 <Button
@@ -204,7 +202,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:alpha="0.4"
                 android:orientation="horizontal">
 
                 <Button
@@ -247,14 +244,13 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/banner_tv"
+            <ImageView
+                android:id="@+id/banner_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="バナーバナーバナー"
-                android:textSize="30sp"
-                android:visibility="gone" />
+                android:background="@drawable/pakutaso_logo2014"
+                android:visibility="visible" />
 
         </LinearLayout>
     </RelativeLayout>
