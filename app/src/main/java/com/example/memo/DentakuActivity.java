@@ -7,11 +7,14 @@ import java.util.Random;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.format.Time;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.content.Context;
 import android.os.Bundle;
@@ -91,6 +95,7 @@ public class DentakuActivity extends ActionBarActivity {
     /* シークレット */
     private Boolean mSecretFlag;
     private ImageView mSecretIv;
+    private Integer mSecretCnt;
     /* トースト */
     private Toast mToast;
     /* ドロワーサイドメニュー */
@@ -98,6 +103,8 @@ public class DentakuActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;    // ドロワートグル
     private ListView mSideMenuLv;                   // サイドメニューリストビュー
     private ArrayAdapter mSideMenuAdapter;          // サイドメニューアダプター
+    /* ディスプレイ */
+    private RelativeLayout mDisplayRl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +117,11 @@ public class DentakuActivity extends ActionBarActivity {
 
         // 画面サイズを基に、表示ビュー（数値、演算子）の文字サイズを設定。
         Display disp = getWindowManager().getDefaultDisplay();
-        mNumberTv.setTextSize(disp.getWidth() / 22);
-        mEnzanshiTv.setTextSize(disp.getWidth() / 22);
+        mNumberTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, disp.getWidth() / 11);
+        mEnzanshiTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, disp.getWidth() / 11);
 
+        // シークレットモードOFF初期化
+        initSecretOff();
         // シークレットモード
         setSeacredMode();
 
@@ -136,10 +145,6 @@ public class DentakuActivity extends ActionBarActivity {
         mKey456Ll = (LinearLayout) findViewById(R.id.key_456_ll);
         mKey123Ll = (LinearLayout) findViewById(R.id.key_123_ll);
         mKey000Ll = (LinearLayout) findViewById(R.id.key_000_ll);
-//        mKey789Ll.setAlpha(120);
-//        mKey456Ll.setAlpha(120);
-//        mKey123Ll.setAlpha(120);
-//        mKey000Ll.setAlpha(120);
         mNum0Btn = (Button) findViewById(R.id.num0_bt);
         mNum1Btn = (Button) findViewById(R.id.num1_bt);
         mNum2Btn = (Button) findViewById(R.id.num2_bt);
@@ -162,8 +167,31 @@ public class DentakuActivity extends ActionBarActivity {
         sZenkou = "";
         sKoukou = "";
         // シークレット
-        mSecretFlag = false;
         mSecretIv = (ImageView) findViewById(R.id.secret_iv);
+        // ディスプレイ
+        mDisplayRl = (RelativeLayout) findViewById(R.id.display_rl);
+    }
+
+    /**
+     * シークレットモードON初期化
+     */
+    private void initSecretOn() {
+        // シークレットモードON
+        mSecretFlag = true;
+        mSecretCnt = 0;
+        // ディスプレイ透過背景（透過率MAX）
+        mDisplayRl.setBackgroundColor(Color.parseColor("#00000000"));
+    }
+
+    /**
+     * シークレットモードOFF初期化
+     */
+    private void initSecretOff() {
+        // シークレットモードOFF
+        mSecretFlag = false;
+        mSecretCnt = 0;
+        // ディスプレイ透過背景
+        mDisplayRl.setBackgroundColor(Color.parseColor("#BBFFFFFF"));
     }
 
     /**
@@ -205,12 +233,16 @@ public class DentakuActivity extends ActionBarActivity {
                     // 既に計算表示部に少数点あり
                     // シークレットモードON
                     if (sCalc.equals("7777.")) {
-                        mSecretFlag = true;
+                        // シークレットモードON初期化
+                        initSecretOn();
+                        // シークレットモード
                         setSeacredMode();
                     }
                     // シークレットモードOFF
-                    if (sCalc.equals("1234.")) {
-                        mSecretFlag = false;
+                    if (sCalc.equals("3333.")) {
+                        // シークレットモードOFF初期化
+                        initSecretOff();
+                        // シークレットモード
                         setSeacredMode();
                     }
                 } else {
@@ -344,6 +376,8 @@ public class DentakuActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // 初期化
                 init();
+                // シークレットモード
+                setSeacredMode();
             }
         });
         /* クリアボタン */
@@ -445,6 +479,14 @@ public class DentakuActivity extends ActionBarActivity {
             mToast = Toast.makeText(mContext, STA_ERR_1, Toast.LENGTH_SHORT);
             mToast.show();
         }
+        if (dWork < -9999999999.99999) {
+            dWork = -9999999999.0;
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            mToast = Toast.makeText(mContext, STA_ERR_1, Toast.LENGTH_SHORT);
+            mToast.show();
+        }
         // 整形
         DecimalFormat format = new DecimalFormat("#,##0.#####;-#,##0.#####");
         sResult = format.format(dWork);
@@ -512,21 +554,6 @@ public class DentakuActivity extends ActionBarActivity {
     }
 
     /**
-     * 3秒かけてターゲットを表示
-     *
-     * @param target
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void animateAlpha(ImageView target) {
-        // alphaプロパティを0fから1fに変化させます
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(target, "alpha", 0f, 1f);
-        // 3秒かけて実行させます
-        objectAnimator.setDuration(3000);
-        // アニメーションを開始します
-        objectAnimator.start();
-    }
-
-    /**
      * オプションメニュー
      */
     @Override
@@ -554,14 +581,58 @@ public class DentakuActivity extends ActionBarActivity {
     }
 
     /**
-     * シークレット
+     * シークレットモード
      */
     private void setSeacredMode() {
-        // 強制表示
-        mSecretFlag = true;
+        // 強制非表示
+        Time time = new Time("Asia/Tokyo");
+        time.setToNow();
+        if (time.year > 2014 && time.month + 1 > 4) {
+            mSecretFlag = false;
+        }
+        // モード切替
         if (mSecretFlag) {
+            /* シークレットモード */
+            // ボタン透過率UP
+            mSecretCnt++;
+            Float fAlpha = (float) 1.0;
+            if (mSecretCnt > 5) {
+                fAlpha = (float) 0.9;
+            }
+            if (mSecretCnt > 10) {
+                fAlpha = (float) 0.8;
+            }
+            if (mSecretCnt > 15) {
+                fAlpha = (float) 0.7;
+            }
+            if (mSecretCnt > 20) {
+                fAlpha = (float) 0.6;
+            }
+            if (mSecretCnt > 25) {
+                fAlpha = (float) 0.5;
+            }
+            if (mSecretCnt > 30) {
+                fAlpha = (float) 0.4;
+            }
+            if (mSecretCnt > 35) {
+                fAlpha = (float) 0.3;
+            }
+            if (mSecretCnt > 40) {
+                fAlpha = (float) 0.2;
+            }
+            if (mSecretCnt > 45) {
+                fAlpha = (float) 0.1;
+            }
+            if (mSecretCnt > 50) {
+                fAlpha = (float) 0.0;
+            }
+            mKey789Ll.setAlpha(fAlpha);
+            mKey456Ll.setAlpha(fAlpha);
+            mKey123Ll.setAlpha(fAlpha);
+            mKey000Ll.setAlpha(fAlpha);
+            // 背景画像ランダム変更
             Random r = new Random();
-            int n = r.nextInt(5);
+            int n = r.nextInt(10);
             switch (n) {
                 case 0:
                     CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_01));
@@ -578,10 +649,32 @@ public class DentakuActivity extends ActionBarActivity {
                 case 4:
                     CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_05));
                     break;
+                case 5:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_11));
+                    break;
+                case 6:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_12));
+                    break;
+                case 7:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_13));
+                    break;
+                case 8:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_14));
+                    break;
+                case 9:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_15));
+                    break;
             }
         } else {
+            /* ノーマルモード */
+            // ボタン透過率
+            mKey789Ll.setAlpha((float) 0.8);
+            mKey456Ll.setAlpha((float) 0.8);
+            mKey123Ll.setAlpha((float) 0.8);
+            mKey000Ll.setAlpha((float) 0.8);
+            // 背景画像ランダム変更
             Random r = new Random();
-            int n = r.nextInt(5);
+            int n = r.nextInt(7);
             switch (n) {
                 case 0:
                     CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_01));
@@ -597,6 +690,12 @@ public class DentakuActivity extends ActionBarActivity {
                     break;
                 case 4:
                     CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_05));
+                    break;
+                case 5:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_06));
+                    break;
+                case 6:
+                    CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.nomal_long_07));
                     break;
             }
         }
