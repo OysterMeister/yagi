@@ -216,7 +216,7 @@ public class OmikujiActivity extends ActionBarActivity {
                 "大凶"
         };
         mResultNum = randomGenerator.nextInt(sResultTitle.length);
-        mResultNum = 11;
+//        mResultNum = 11;
 
         String sResultDetail = "";
         switch (mResultNum) {
