@@ -105,6 +105,9 @@ public class DentakuActivity extends ActionBarActivity {
     private ArrayAdapter mSideMenuAdapter;          // サイドメニューアダプター
     /* ディスプレイ */
     private RelativeLayout mDisplayRl;
+    /* ロゴ */
+    private ImageView mLogoOystarsIv;
+    private ImageView mLogoPakutasoIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +173,9 @@ public class DentakuActivity extends ActionBarActivity {
         mSecretIv = (ImageView) findViewById(R.id.secret_iv);
         // ディスプレイ
         mDisplayRl = (RelativeLayout) findViewById(R.id.display_rl);
+        // ロゴ
+        mLogoOystarsIv = (ImageView) findViewById(R.id.oystars_logo_iv);
+        mLogoPakutasoIv = (ImageView) findViewById(R.id.pakutaso_logo_iv);
     }
 
     /**
@@ -624,7 +630,7 @@ public class DentakuActivity extends ActionBarActivity {
                 fAlpha = (float) 0.1;
             }
             if (mSecretCnt > 50) {
-                fAlpha = (float) 0.0;
+                //fAlpha = (float) 0.0;
             }
             mKey789Ll.setAlpha(fAlpha);
             mKey456Ll.setAlpha(fAlpha);
@@ -632,7 +638,7 @@ public class DentakuActivity extends ActionBarActivity {
             mKey000Ll.setAlpha(fAlpha);
             // 背景画像ランダム変更
             Random r = new Random();
-            int n = r.nextInt(10);
+            int n = r.nextInt(5);
             switch (n) {
                 case 0:
                     CommonUtil.setBackground(mSecletLongIv, getResources().getDrawable(R.drawable.secret_long_01));
